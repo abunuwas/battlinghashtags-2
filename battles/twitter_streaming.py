@@ -14,6 +14,8 @@ import datetime
 from .models import Battle, Hashtag, Tweet
 from .twitter_analyzer import twitterAnalyzer
 
+from .twitter_api_keys import ACCESS_TOKEN, ACCESS_SECRET, CONSUMER_KEY, CONSUMER_SECRET
+
 
 ACCESS_TOKEN = ''
 ACCESS_SECRET = ''
