@@ -1,3 +1,5 @@
+import datetime
+
 import tweepy
 from tweepy import OAuthHandler, Stream
 from tweepy.streaming import StreamListener
@@ -19,14 +21,24 @@ class MyListener(StreamListener):
                 if status_code == 420:
                         return False
 
+
 myListener = MyListener()
 stream = Stream(auth = api.auth, listener=myListener)
-##stream.filter(track=['love'], async=True)
-##stream.filter(track=['cat'], async=True)
 
-def getTweets(*args):
+
+def streamManager(now, end):
+        while now < end:
+                now = datetime.datetime.now()                
+        else:
+                print('closing connection...')
+                stream.disconnect()
+
+def getTweets(lapse, *args):
+        now = datetime.datetime.now()
+        end = now + datetime.timedelta(seconds=lapse)
+        hashtags = ', '.join(arg for arg in args)
+        stream.filter(track=hashtags, async=True)
+        streamManager(now, end)
         
-##        tweets = ', '.join(arg for arg in args)
-##        stream.filter(track=[tweets])
 
-getTweets('python', 'java', 'haskell')
+getTweets(3, 'python', 'java', 'haskell')
